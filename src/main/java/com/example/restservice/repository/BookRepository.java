@@ -21,6 +21,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     @Query("SELECT b FROM BookEntity b WHERE b.isSoftDeleted = false AND b.availability = :availability")
     List<BookEntity> queryAllBooksByAvailability(@Param("availability") BookAvailabilityEntity availability);
 
+    Optional<BookEntity> findBookByTitle(String title);
+
     @Query("SELECT c FROM BookCategoryEntity c WHERE c.isSoftDeleted = false")
     List<BookCategoryEntity> getBookCategoriesWithLimit(Pageable pageable);
 

@@ -1,8 +1,7 @@
 package com.example.restservice.service.book;
 
 import com.example.restservice.app.AppMessage;
-import com.example.restservice.exception.BookCategoryInvalidLimitException;
-import com.example.restservice.exception.NotFoundException;
+import com.example.restservice.exception.*;
 import com.example.restservice.model.dto.BookCategoryDto;
 import com.example.restservice.model.dto.BookDto;
 import com.example.restservice.model.entity.BookAvailabilityEntity;
@@ -66,13 +65,24 @@ public class BookServiceImpl implements BookService {
         Optional<BookCategoryEntity> category = repository.getBookCategoryById(request.getCategoryId());
 
         if(category.isEmpty()) {
-            throw new NotFoundException(String.format("Book category %d not found", request.getCategoryId()));
+            throw new BookNotFoundException(
+                    String.format(AppMessage.BOOK_CATEGORY_NOT_FOUND,
+                            request.getCategoryId())
+            );
+        }
+
+        Optional<BookEntity> bookEntity = repository.findBookByTitle(request.getTitle());
+
+        if(bookEntity.isPresent()) {
+            throw new BookAlreadyExistsException(
+                    String.format(AppMessage.BOOK_ALREADY_EXISTS,
+                            request.getTitle())
+            );
         }
 
         BookEntity entity = BookMapper.fromRequest(request);
         entity.setCategory(category.get());
         repository.saveAndFlush(entity);
-
         return Mono.just(BookMapper.fromEntity(entity));
     }
 }

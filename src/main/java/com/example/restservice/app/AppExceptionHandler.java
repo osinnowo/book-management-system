@@ -21,7 +21,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return Mono.just(new ResponseEntity<>(BaseResponse.fail(ex.getMessage()), HttpStatus.NOT_ACCEPTABLE));
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(BookNotFoundException.class)
     public final Mono<ResponseEntity<BaseResponse<?>>> handleNotFoundException(Exception ex, ServerWebExchange exchange) {
         return Mono.just(new ResponseEntity<>(BaseResponse.fail(ex.getMessage()), HttpStatus.NOT_FOUND));
     }

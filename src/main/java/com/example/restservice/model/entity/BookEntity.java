@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "books")
 public class BookEntity extends BaseEntity<BookEntity> {
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String title;
 
     @Column(nullable = false)
