@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping("/api/books")
 @RequiredArgsConstructor
 public class BookController {
 
@@ -28,17 +28,15 @@ public class BookController {
                 .map(BaseResponse::okResponse);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getAllBooks() {
         return bookService.getAllBooks(BookServiceImpl.BooksQueryEnum.ALL.name())
                 .collectList()
                 .map(BaseResponse::okResponse);
     }
 
-    @GetMapping("/all/status")
-    public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getBooks(
-            @RequestParam(required = true, defaultValue = "AVAILABLE") String availability
-    ) {
+    @GetMapping("/status")
+    public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getBooks(@RequestParam(required = true) String availability) {
         return bookService.getAllBooks(availability)
                 .collectList()
                 .map(BaseResponse::okResponse);
