@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
@@ -17,14 +18,14 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     @Query("SELECT b FROM BookEntity b WHERE b.isSoftDeleted = false")
     List<BookEntity> queryAllBooks();
 
-    @Query("SELECT b FROM BookEntity b WHERE b.isSoftDeleted = false AND b.availability = 'AVAILABLE'")
-    List<BookEntity> queryAvailableBooks();
-
     @Query("SELECT b FROM BookEntity b WHERE b.isSoftDeleted = false AND b.availability = :availability")
     List<BookEntity> queryAllBooksByAvailability(@Param("availability") BookAvailabilityEntity availability);
 
     @Query("SELECT c FROM BookCategoryEntity c WHERE c.isSoftDeleted = false")
     List<BookCategoryEntity> getBookCategoriesWithLimit(Pageable pageable);
 
-    BookEntity findBookByCategoryId(Long categoryId);
+    Optional<BookEntity> findBookByCategoryId(Long categoryId);
+
+    @Query("SELECT c FROM BookCategoryEntity c WHERE c.isSoftDeleted = false AND c.id = :categoryId")
+    Optional<BookCategoryEntity> getBookCategoryById(Long categoryId);
 }

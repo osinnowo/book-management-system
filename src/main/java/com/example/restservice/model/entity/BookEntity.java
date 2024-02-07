@@ -23,13 +23,13 @@ public class BookEntity extends BaseEntity<BookEntity> {
     private String author;
 
     @Column(nullable = false)
-    private int stockLevel;
+    private Long stockLevel;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private BookAvailabilityEntity availability;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private BookCategoryEntity category;
 }

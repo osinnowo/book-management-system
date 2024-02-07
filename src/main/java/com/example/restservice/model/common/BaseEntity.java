@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import java.time.LocalDate;
 
@@ -33,4 +34,5 @@ public class BaseEntity<T> {
         dateCreated = LocalDate.now();
         isSoftDeleted = false;
     }
+
 }

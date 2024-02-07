@@ -3,14 +3,14 @@ package com.example.restservice.controllers;
 import com.example.restservice.model.common.BaseResponse;
 import com.example.restservice.model.dto.BookCategoryDto;
 import com.example.restservice.model.dto.BookDto;
+import com.example.restservice.model.request.BookRequest;
 import com.example.restservice.service.book.BookService;
 import com.example.restservice.service.book.BookServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 import java.util.List;
 
@@ -39,6 +39,13 @@ public class BookController {
     public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getBooks(@RequestParam(required = true) String availability) {
         return bookService.getAllBooks(availability)
                 .collectList()
+                .map(BaseResponse::okResponse);
+    }
+
+    @PostMapping
+    public Mono<ResponseEntity<BaseResponse<BookDto>>> createBook(@Validated @RequestBody BookRequest bookRequest) {
+        return bookService
+                .createBook(bookRequest)
                 .map(BaseResponse::okResponse);
     }
 }
