@@ -61,6 +61,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Mono<BookCategoryDto> getBookCategoryById(Long categoryId) {
+        BookCategoryEntity category = repository.getBookCategoryById(categoryId)
+                .orElseThrow(() -> new BookCategoryNotFoundException(
+                        String.format(AppMessage.BOOK_CATEGORY_NOT_FOUND,
+                                categoryId)
+                ));
+
+        return Mono.just(BookMapper.fromEntity(category));
+    }
+
+    @Override
     public Mono<BookDto> createBook(BookRequest request) throws RuntimeException {
         Optional<BookCategoryEntity> category = repository.getBookCategoryById(request.getCategoryId());
 

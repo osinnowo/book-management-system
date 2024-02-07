@@ -27,6 +27,13 @@ public class BookController {
                 .map(BaseResponse::okResponse);
     }
 
+    @GetMapping("/categories/{categoryId}")
+    public Mono<ResponseEntity<BaseResponse<BookCategoryDto>>> getBookCategoryBy(@Validated @PathVariable Long categoryId) {
+        return bookService
+                .getBookCategoryById(categoryId)
+                .map(BaseResponse::okResponse);
+    }
+
     @GetMapping
     public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getAllBooks() {
         return bookService.getAllBooks(BookServiceImpl.BooksQueryEnum.ALL.name())
@@ -59,7 +66,7 @@ public class BookController {
     }
 
     @GetMapping("/{bookId}")
-    public Mono<ResponseEntity<BaseResponse<BookDto>> getBookBy(@Validated @PathVariable Long bookId) {
+    public Mono<ResponseEntity<BaseResponse<BookDto>>> getBookBy(@Validated @PathVariable Long bookId) {
         return bookService
                 .getBookById(bookId)
                 .map(BaseResponse::okResponse);

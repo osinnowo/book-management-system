@@ -9,8 +9,9 @@ import reactor.core.publisher.Mono;
 import java.awt.print.Book;
 
 public interface BookService {
-    Flux<BookDto> getAllBooks(String availability);
     Flux<BookCategoryDto> getAllCategories(int limit);
+    Mono<BookCategoryDto> getBookCategoryById(Long categoryId);
+    Flux<BookDto> getAllBooks(String availability);
     Mono<BookDto> createBook(BookRequest bookRequest);
     Mono<BookDto> updateBook(Long bookId, BookRequest bookRequest);
     Mono<BookDto> getBookById(Long bookId);

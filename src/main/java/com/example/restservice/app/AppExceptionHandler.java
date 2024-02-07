@@ -31,6 +31,11 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return Mono.just(new ResponseEntity<>(BaseResponse.fail(ex.getMessage()), HttpStatus.NOT_FOUND));
     }
 
+    @ExceptionHandler(BookCategoryNotFoundException.class)
+    public final Mono<ResponseEntity<BaseResponse<?>>> handleBookCategoryNotFoundException(Exception ex, ServerWebExchange exchange) {
+        return Mono.just(new ResponseEntity<>(BaseResponse.fail(ex.getMessage()), HttpStatus.NOT_FOUND));
+    }
+
     @Override
     public Mono<ResponseEntity<Object>> handleWebExchangeBindException(WebExchangeBindException ex, HttpHeaders headers, HttpStatusCode status, ServerWebExchange exchange) {
         handleExceptionInternal(ex, null, headers, status, exchange);
