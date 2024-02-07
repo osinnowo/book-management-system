@@ -113,6 +113,7 @@ public class BookServiceImpl implements BookService {
         entity.setAuthor(bookRequest.getAuthor());
         entity.setStockLevel(bookRequest.getStockLevel());
         entity.setAvailability(BookAvailabilityEntity.valueOf(bookRequest.getAvailability()));
+        entity.setCategory(repository.getBookCategoryById(bookRequest.getCategoryId()).get());
         repository.saveAndFlush(entity);
 
         return Mono.just(BookMapper.fromEntity(entity));
