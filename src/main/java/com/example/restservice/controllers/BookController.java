@@ -34,6 +34,14 @@ public class BookController {
                 .map(BaseResponse::okResponse);
     }
 
+    @GetMapping("/categories/{categoryId}/books")
+    public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getBooksByCategory(@Validated @PathVariable Long categoryId) {
+        return bookService
+                .getBooksByCategory(categoryId)
+                .collectList()
+                .map(BaseResponse::okResponse);
+    }
+
     @GetMapping
     public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getAllBooks() {
         return bookService.getAllBooks(BookServiceImpl.BooksQueryEnum.ALL.name())

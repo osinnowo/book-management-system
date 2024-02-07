@@ -15,4 +15,5 @@ public interface BookService {
     Mono<BookDto> createBook(BookRequest bookRequest);
     Mono<BookDto> updateBook(Long bookId, BookRequest bookRequest);
     Mono<BookDto> getBookById(Long bookId);
+    Flux<BookDto> getBooksByCategory(Long categoryId);
 }

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +29,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     @Query("SELECT c FROM BookCategoryEntity c WHERE c.isSoftDeleted = false AND c.id = :categoryId")
     Optional<BookCategoryEntity> getBookCategoryById(Long categoryId);
+
+    @Query("SELECT b FROM BookEntity b WHERE b.isSoftDeleted = false AND b.category.id = :categoryId")
+    List<BookEntity> getBooksByCategory(Long categoryId);
 }

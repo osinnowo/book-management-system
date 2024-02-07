@@ -124,4 +124,15 @@ public class BookServiceImpl implements BookService {
         BookEntity book = repository.findById(bookId).orElseThrow(() -> new BookNotFoundException("Cannot find book with " + bookId));
         return Mono.just(BookMapper.fromEntity(book));
     }
+
+    @Override
+    public Flux<BookDto> getBooksByCategory(Long categoryId) {
+        List<BookEntity> books = repository.getBooksByCategory(categoryId);
+        return Flux.fromIterable(
+                books
+                .stream()
+                .map(BookMapper::fromEntity)
+                .collect(Collectors.toList())
+        );
+    }
 }
