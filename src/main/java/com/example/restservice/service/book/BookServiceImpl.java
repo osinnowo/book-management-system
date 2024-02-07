@@ -106,4 +106,10 @@ public class BookServiceImpl implements BookService {
 
         return Mono.just(BookMapper.fromEntity(entity));
     }
+
+    @Override
+    public Mono<BookDto> getBookById(Long bookId) {
+        BookEntity book = repository.findById(bookId).orElseThrow(() -> new BookNotFoundException("Cannot find book with " + bookId));
+        return Mono.just(BookMapper.fromEntity(book));
+    }
 }

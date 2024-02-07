@@ -48,13 +48,20 @@ public class BookController {
                 .map(BaseResponse::okResponse);
     }
 
-    @PutMapping
+    @PutMapping("/{bookId}")
     public Mono<ResponseEntity<BaseResponse<BookDto>>> updateBook(
             @Validated @PathVariable Long bookId,
             @Validated @RequestBody BookRequest bookRequest
     ) {
         return bookService
                 .updateBook(bookId, bookRequest)
+                .map(BaseResponse::okResponse);
+    }
+
+    @GetMapping("/{bookId}")
+    public Mono<ResponseEntity<BaseResponse<BookDto>> getBookBy(@Validated @PathVariable Long bookId) {
+        return bookService
+                .getBookById(bookId)
                 .map(BaseResponse::okResponse);
     }
 }
