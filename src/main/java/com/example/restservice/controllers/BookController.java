@@ -2,7 +2,9 @@ package com.example.restservice.controllers;
 
 import com.example.restservice.model.common.BaseResponse;
 import com.example.restservice.model.dto.BookCategoryDto;
-import com.example.restservice.service.BookService;
+import com.example.restservice.model.dto.BookDto;
+import com.example.restservice.service.book.BookService;
+import com.example.restservice.service.book.BookServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,24 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/categories")
-    public Mono<ResponseEntity<BaseResponse<List<BookCategoryDto>>>>
-           getBookCategories(@RequestParam(required = false, defaultValue = "10") Integer limit) {
+    public Mono<ResponseEntity<BaseResponse<List<BookCategoryDto>>>> getBookCategories(@RequestParam(required = false, defaultValue = "10") Integer limit) {
         return bookService.getAllCategories(limit)
+                .collectList()
+                .map(BaseResponse::okResponse);
+    }
+
+    @GetMapping("/all")
+    public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getAllBooks() {
+        return bookService.getAllBooks(BookServiceImpl.BooksQueryEnum.ALL.name())
+                .collectList()
+                .map(BaseResponse::okResponse);
+    }
+
+    @GetMapping("/all/status")
+    public Mono<ResponseEntity<BaseResponse<List<BookDto>>>> getBooks(
+            @RequestParam(required = true, defaultValue = "AVAILABLE") String availability
+    ) {
+        return bookService.getAllBooks(availability)
                 .collectList()
                 .map(BaseResponse::okResponse);
     }
