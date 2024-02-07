@@ -85,4 +85,25 @@ public class BookServiceImpl implements BookService {
         repository.saveAndFlush(entity);
         return Mono.just(BookMapper.fromEntity(entity));
     }
+
+    @Override
+    public Mono<BookDto> updateBook(Long bookId, BookRequest bookRequest) {
+        Optional<BookEntity> bookEntity = repository.findById(bookId);
+
+        if(bookEntity.isEmpty()) {
+            throw new BookNotFoundException(
+                    String.format(AppMessage.BOOK_NOT_FOUND,
+                            bookId)
+            );
+        }
+
+        BookEntity entity = bookEntity.get();
+        entity.setTitle(bookRequest.getTitle());
+        entity.setAuthor(bookRequest.getAuthor());
+        entity.setStockLevel(bookRequest.getStockLevel());
+        entity.setAvailability(BookAvailabilityEntity.valueOf(bookRequest.getAvailability()));
+        repository.saveAndFlush(entity);
+
+        return Mono.just(BookMapper.fromEntity(entity));
+    }
 }

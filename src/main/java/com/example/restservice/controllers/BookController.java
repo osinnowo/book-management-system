@@ -6,7 +6,6 @@ import com.example.restservice.model.dto.BookDto;
 import com.example.restservice.model.request.BookRequest;
 import com.example.restservice.service.book.BookService;
 import com.example.restservice.service.book.BookServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -46,6 +45,16 @@ public class BookController {
     public Mono<ResponseEntity<BaseResponse<BookDto>>> createBook(@Validated @RequestBody BookRequest bookRequest) {
         return bookService
                 .createBook(bookRequest)
+                .map(BaseResponse::okResponse);
+    }
+
+    @PutMapping
+    public Mono<ResponseEntity<BaseResponse<BookDto>>> updateBook(
+            @Validated @PathVariable Long bookId,
+            @Validated @RequestBody BookRequest bookRequest
+    ) {
+        return bookService
+                .updateBook(bookId, bookRequest)
                 .map(BaseResponse::okResponse);
     }
 }
