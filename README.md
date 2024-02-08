@@ -85,8 +85,8 @@ This project is a Bookstore API developed using Spring Boot. It provides endpoin
 
 1. Clone the repository.
 2. Navigate to the project directory.
-3. Run the application using your IDE or with the command: `./mvnw spring-boot:run`.
-4. The application will start, and you can access the endpoints using a tool like Postman or cURL.
+3. Run docker compose up -d
+4. The api will start running on port 8091, and you can access the endpoints using a tool like Postman or cURL.
 
 ## Contributors
 
