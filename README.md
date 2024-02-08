@@ -90,8 +90,4 @@ This project is a Bookstore API developed using Spring Boot. It provides endpoin
 
 ## Contributors
 
-- [Your Name or Organization](https://github.com/yourusername)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- [Osinnowo Emmanuel](https://github.com/osinnowo)
