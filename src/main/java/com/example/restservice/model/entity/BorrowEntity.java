@@ -20,8 +20,8 @@ import java.time.LocalDate;
 public class BorrowEntity extends BaseEntity<BorrowEntity> {
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private CustomerEntity customer;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)

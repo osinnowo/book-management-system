@@ -6,8 +6,6 @@ import com.example.restservice.model.request.BookRequest;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.awt.print.Book;
-
 public interface BookService {
     Flux<BookCategoryDto> getAllCategories(int limit);
     Mono<BookCategoryDto> getBookCategoryById(Long categoryId);

@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @SuperBuilder
 public class BaseEntity<T> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -34,5 +33,4 @@ public class BaseEntity<T> {
         dateCreated = LocalDate.now();
         isSoftDeleted = false;
     }
-
 }

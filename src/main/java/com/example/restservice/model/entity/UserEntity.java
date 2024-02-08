@@ -16,11 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "customers")
-public class CustomerEntity extends BaseEntity<CustomerEntity> {
+@Table(name = "users")
+public class UserEntity extends BaseEntity<UserEntity> {
     @Column(nullable = false)
-    private String name;
+    private String username;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(nullable = false)
+    private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<BorrowEntity> borrows;
 }
